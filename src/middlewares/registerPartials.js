@@ -57,10 +57,9 @@ const registerAllPartialsFromFile = async (baseURL, req) => {
 
 const registerPartialsFromAPI = async (req) => {
   
-  const { orgName, apiName }  = req.params;
+  const orgName  = req.params.orgName;
   const orgData = await adminDao.getOrganization(orgName);
   const orgID = orgData.ORG_ID;
-  const apiID = await apiDao.getAPIId(apiName);
   const imageUrl = `${req.protocol}://${req.get('host')}${constants.ROUTE.DEVPORTAL_ASSETS_BASE_PATH}${orgID}/layout?fileType=image&fileName=`;
   let partials = await adminDao.getOrgContent({
     orgId: orgData.ORG_ID,
@@ -90,6 +89,8 @@ const registerPartialsFromAPI = async (req) => {
     ),
   };
   if (req.originalUrl.includes(constants.ROUTE.API_LANDING_PAGE_PATH)) {
+    const apiName = req.params.apiName;
+    const apiID = await apiDao.getAPIId(apiName);
     //fetch markdown content for API if exists
     const markdownResponse = await apiDao.getAPIFile(constants.FILE_NAME.API_MD_CONTENT_FILE_NAME, orgID, apiID);
     const markdownContent = markdownResponse ? markdownResponse.API_FILE.toString("utf8") : "";
