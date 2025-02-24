@@ -11,7 +11,7 @@
       <a type="button" class="btn create-project-button" href="{{baseUrl}}/applications/create">
         <div class="create-project-content">
           <span class="plus-icon">+</span>
-          <span class="create-text">New Application</span>
+          <span class="create-text">Create Application</span>
         </div>
       </a>
     </div>
@@ -26,24 +26,12 @@
           </a>
         </h5>
         <div class='row list-items'>
-          <div class='applicationlist-tags'>
-            {{#if (eq status 'APPROVED')}}
-            <span class='badge badge-custom1'>{{status}}</span>
-            {{else}}
-              <span class='badge badge-custom2'>{{status}}</span>
-            {{/if}}
-          </div>
         </div>
         <div class='application-card-meta'>
           <p>
             <i class='bi bi-grid'></i>
               Subscriptions:
               {{subscriptionCount}}
-          </p>
-          <p>
-            <i class='bi bi-speedometer2'></i>
-              Throttling Policy:
-              {{throttlingPolicy}}
           </p>
         </div>
         <div class="application-card-actions">
@@ -68,5 +56,35 @@
     </div>
     {{/applicationsMetadata}}
   </div>
+   {{!-- <div class="applist-grid">
+        <div class="card applist-create-card">
+            <div class="applist-plus-icon">+</div>
+            <div class="applist-create-text">Create Application</div>
+        </div>
+
+        <div class="card applist-app-card">
+            <div class="applist-card-header">
+                <div>
+                    <span class="applist-app-title">Default</span>
+                    <span class="applist-badge">Approved</span>
+                </div>
+                <div class="applist-actions">
+                    <button class="applist-action-btn">✏️</button>
+                    <button class="applist-action-btn">🗑️</button>
+                </div>
+            </div>
+            <div class="applist-info-row">
+                <span class="applist-info-label">Subscriptions:</span>
+                <span>01</span>
+            </div>
+            <div class="applist-info-row">
+                <span class="applist-info-label">Throttling Policy:</span>
+                <span>Unlimited</span>
+            </div>
+           
+        </div>
+
+        <!-- Additional app cards would follow the same structure -->
+    </div> --}}
 </section>
 </main>
