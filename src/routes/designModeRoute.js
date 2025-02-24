@@ -48,10 +48,10 @@ router.get('/views/:viewName/myAPIs', registerPartials, myAPIsController.loadDef
 
 router.get('/configure', registerPartials, settingsController.loadSettingPage);
 
-router.get('/login', registerPartials, authController.login);
-router.get('/callback', registerPartials, authController.handleCallback);
-router.get('/logout', registerPartials, authController.handleLogOut);
-router.get('/signup', registerPartials, authController.handleSignUp);
+router.get('/views/:viewName/login', registerPartials, authController.login);
+router.get('/views/:viewName/callback', registerPartials, authController.handleCallback);
+router.get('/views/:viewName/logout', registerPartials, authController.handleLogOut);
+router.get('/views/:viewName/signup', registerPartials, authController.handleSignUp);
 
 // eslint-disable-next-line no-useless-escape
 router.get('(^(?!\/(favicon\.ico|images\/|styles\/|*login*|devportal\/|views\/)))/*', registerPartials,  contentController.loadCustomContent);
