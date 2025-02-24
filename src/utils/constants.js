@@ -24,6 +24,7 @@ module.exports = {
     FILE_NAME_PARAM: '&fileName=',
     API_TYPE_QUERY: '/template?type=',
     HEADER_PARTIAL_NAME: 'header',
+    SIDEBAR_PARTIAL_NAME: 'sidebar',
     HERO_PARTIAL_NAME: 'hero',
     BASE_URL: 'https://localhost:',
     BASE_URL_NAME: 'baseUrl',
@@ -143,6 +144,7 @@ module.exports = {
         API_DEFINITION_GRAPHQL: 'apiDefinition.graphql',
         API_DEFINITION_XML: 'apiDefinition.xml',
         PARTIAL_HEADER_FILE_NAME: 'header.hbs',
+        PARTIAL_SIDEBAR_FILE_NAME: 'sidebar.hbs',
     },
     ERROR_MESSAGE: {
         ORG_NOT_FOUND: "Failed to load organization",
