@@ -298,6 +298,8 @@ const invokeApiRequest = async (req, method, url, headers, body) => {
     headers = headers || {};
     if (req.user) {
         headers.Authorization = "Bearer " + req.user.accessToken;
+    } else { 
+        headers.Authorization = req.headers.authorization;
     }
     let httpsAgent;
 
@@ -327,7 +329,7 @@ const invokeApiRequest = async (req, method, url, headers, body) => {
         return response.data;
     } catch (error) {
 
-        console.log(`Error while invoking API: ${error}`);
+        console.log(`Error while invoking API:`, error);
         let message = error.message;
         if (error.response) {
             message = error.response.data.description;
