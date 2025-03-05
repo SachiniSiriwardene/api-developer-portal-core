@@ -289,7 +289,6 @@ const invokeApiRequest = async (req, method, url, headers, body) => {
         if (body) {
             options.data = body;
         }
-        console.log(`Request req['exchangedToken1']:`, req.user);
 
         if (config.advanced.tokenExchanger.enabled) {
             decodedToken = jwt.decode(req.user.exchangeToken);
@@ -427,14 +426,13 @@ async function readFilesInDirectory(directory, orgId, protocol, host, viewName, 
                 if (file.name.endsWith(".css")) {
                     fileType = "style"
                     if (file.name === "main.css") {
-                        strContent = strContent.replace(/@import\s*['"]\/styles\/([^'"]+)['"];/g,
-                            `@import url("${protocol}://${host}${constants.ROUTE.DEVPORTAL_ASSETS_BASE_PATH}${orgId}/views/${viewName}/layout?fileType=style&fileName=$1");`);
+                        strContent = strContent.replace(/@import\s*['"]\/styles\/([^'"]+)['"];/g, `@import url("${config.advanced.resourceLoadFromBaseUrl ? config.baseUrl : `${protocol}://${host}`}${constants.ROUTE.DEVPORTAL_ASSETS_BASE_PATH}${orgId}/views/${viewName}/layout?fileType=style&fileName=$1");`);
                         content = Buffer.from(strContent, constants.CHARSET_UTF8);
                     }
                 } else if (file.name.endsWith(".hbs") && dir.endsWith("layout")) {
                     fileType = "layout"
                     if (file.name === "main.hbs") {
-                        strContent = strContent.replace(/\/styles\//g, `${protocol}://${host}${constants.ROUTE.DEVPORTAL_ASSETS_BASE_PATH}${orgId}/views/${viewName}/layout?fileType=style&fileName=`);
+                        strContent = strContent.replace(/\/styles\//g, `${config.advanced.resourceLoadFromBaseUrl ? config.baseUrl : `${protocol}://${host}`}${constants.ROUTE.DEVPORTAL_ASSETS_BASE_PATH}${orgId}/views/${viewName}/layout?fileType=style&fileName=`);                        
                         content = Buffer.from(strContent, constants.CHARSET_UTF8);
                     }
                     validateScripts(strContent);
@@ -474,15 +472,15 @@ function validateScripts(strContent) {
             "<script src='/technical-scripts/common.js' defer></script>",
             "<script src='/technical-scripts/subscription.js' defer></script>"
         ]);
-    
+
         const scriptRegex = /<script(?:\s+[^>]*)?>[\s\S]*?<\/script>/g;
         let match;
         const extractedScripts = new Set();
-    
+
         while ((match = scriptRegex.exec(strContent)) !== null) {
             extractedScripts.add(match[0].trim());
         }
-    
+
         for (const script of extractedScripts) {
             if (!allowedScripts.has(script)) {
                 throw new CustomError(400, constants.ERROR_CODE[400], `Additional scripts not allowed`);
@@ -555,7 +553,7 @@ async function tokenExchanger(token, orgName) {
         requested_token_type: config.advanced.tokenExchanger.requested_token_type,
         scope: config.advanced.tokenExchanger.scope,
         subject_token: token,
-        orgHandle: orgDetails.ORGANIZATION_IDENTIFIER
+        orgHandle: orgDetails.ORG_HANDLE
     });
 
     try {
