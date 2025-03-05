@@ -790,11 +790,11 @@ const getAllAPIMetadata = async (orgID, groups, viewName, t) => {
         }
     }
     // add all public apis
+    //TODO: check RBAC for APIs
     try {
         const publicAPIS = await APIMetadata.findAll({
             where: {
-                ORG_ID: orgID,
-                VISIBILITY: constants.API_VISIBILITY.PUBLIC
+                ORG_ID: orgID
             },
             include: [{
                 model: APIImageMetadata,
