@@ -149,7 +149,8 @@ const handleLogOut = async (req, res) => {
     if (req.user != null) {
         idToken = req.user.idToken;
     }
-
+    req['returnLogout'] = req.originalUrl.replace('/logout', '');
+    console.log('Logged out URL: ', req['returnLogout']);
     req.session.destroy();
     if (req.user && req.user.accessToken) {
         const referer = req.get('referer');
@@ -157,8 +158,9 @@ const handleLogOut = async (req, res) => {
         const match = referer.match(regex);
         const logoutURL = match ? match[1] : null;
 
+        console.log('Redirecting to post_logout_redirect_uri ....', authJsonContent.logoutRedirectURI);
         req.logout(
-            () => res.redirect(`${authJsonContent.logoutURL}?post_logout_redirect_uri=${logoutURL}&id_token_hint=${idToken}`)
+            () => res.redirect(`${authJsonContent.logoutURL}?post_logout_redirect_uri=${authJsonContent.logoutRedirectURI}&id_token_hint=${idToken}`)
         );
     } else {
 
@@ -166,9 +168,15 @@ const handleLogOut = async (req, res) => {
     }
 };
 
+const handleLogOutLanding = async (req, res) => {  
+    console.log('Redirecting to ....', req['returnLogout']);
+    res.redirect(req['returnLogout']);
+}
+
 module.exports = {
     login,
     handleCallback,
     handleSignUp,
-    handleLogOut
+    handleLogOut,
+    handleLogOutLanding
 };

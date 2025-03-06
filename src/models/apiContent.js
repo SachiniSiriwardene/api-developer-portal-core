@@ -28,11 +28,14 @@ const APIContent = sequelize.define('DP_API_CONTENT', {
         type: DataTypes.BLOB,
         allowNull: false,
     },
-    FILE_NAME: {
+    TYPE: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    
+    FILE_NAME: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 }, {
     timestamps: false,
     tableName: 'DP_API_CONTENT',
